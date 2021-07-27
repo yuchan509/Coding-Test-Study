@@ -1,4 +1,4 @@
-# Coding-Tests
+# Coding-Test
 
 ## Site 
 - https://programmers.co.kr/
