@@ -17,7 +17,7 @@ For example, consider array A such that:
 We have five pairs of passing cars: (0, 1), (0, 3), (0, 4), (2, 3), (2, 4).
 '''
 
-## Prifixs sum
+## Prifixs sum ##
 
 # solve.01 (50%)
 from collections import deque
@@ -43,7 +43,6 @@ def solution(A):
             if ans > 1E9:
                 return -1
     return ans
-
 
 # solve.03 (100%)
 def solution(A):
