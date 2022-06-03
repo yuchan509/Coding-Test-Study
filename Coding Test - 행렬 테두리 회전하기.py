@@ -1,84 +1,57 @@
-def rotateMatrix(mat):
-     
-    if not len(mat):
-        return
-     
-    """
-        top : starting row index
-        bottom : ending row index
-        left : starting column index
-        right : ending column index
-    """
- 
-    top = 0
-    bottom = len(mat)-1
- 
-    left = 0
-    right = len(mat[0])-1
- 
-    while left < right and top < bottom:
- 
-        # Store the first element of next row,
-        # this element will replace first element of
-        # current row
-        prev = mat[top+1][left]
- 
-        # Move elements of top row one step right
-        for i in range(left, right+1):
-            curr = mat[top][i]
-            mat[top][i] = prev
-            prev = curr
- 
-        top += 1
- 
-        # Move elements of rightmost column one step downwards
-        for i in range(top, bottom+1):
-            curr = mat[i][right]
-            mat[i][right] = prev
-            prev = curr
- 
-        right -= 1
- 
-        # Move elements of bottom row one step left
-        for i in range(right, left-1, -1):
-            curr = mat[bottom][i]
-            mat[bottom][i] = prev
-            prev = curr
- 
-        bottom -= 1
- 
-        # Move elements of leftmost column one step upwards
-        for i in range(bottom, top-1, -1):
-            curr = mat[i][left]
-            mat[i][left] = prev
-            prev = curr
- 
-        left += 1
- 
-    return mat
- 
-# Utility Function
-def printMatrix(mat):
-    for row in mat:
-        print row
- 
- 
-# Test case 1
-matrix =[
-            [1,  2,  3,  4 ],
-            [5,  6,  7,  8 ],
-            [9,  10, 11, 12 ],
-            [13, 14, 15, 16 ] 
-        ]
-# Test case 2
-"""
-matrix =[
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9]
-        ]
-"""
- 
-matrix = rotateMatrix(matrix)
-# Print modified matrix
-printMatrix(matrix)
+def solution(rows, columns, queries):
+
+    answer = []
+    arr = [[0] * columns for _ in range(rows)]
+
+    v = 1
+    for i in range(rows):
+        for j in range(columns):
+            arr[i][j] = v
+            v += 1
+
+    '''
+        top    : starting row index : 2
+        left   : starting col index : 2
+        bottom : ending row index   : 5
+        right  : ending col index1  : 4
+    '''
+
+    for t, l, b, r in queries:
+
+        top, left, bottom, right =  t - 1, l - 1, b - 1, r - 1
+
+        ans = []
+        start = arr[top][left]
+        ans.append(start)
+
+        # row down.
+        for i in range(top, bottom):   
+            arr[i][left] = arr[i + 1][left]
+            ans.append(arr[i + 1][left])
+
+        # col right.
+        for i in range(left, right):   
+            arr[bottom][i] = arr[bottom][i + 1]
+            ans.append(arr[bottom][i + 1])
+
+        # col up.
+        for i in range(bottom, top, -1):   
+            arr[i][right] = arr[i - 1][right]
+            ans.append(arr[i - 1][right])
+
+        # row left.
+        for i in range(right, left, - 1):
+            arr[top][i] = arr[top][i - 1]
+            ans.append(arr[top][i - 1])
+
+        arr[top][left + 1] = start
+
+        answer.append(min(ans))
+
+    return answer
+
+
+# Run.
+rows, columns = 6, 6
+queries = [[2,2,5,4],[3,3,6,6],[5,1,6,3]]
+solution(rows, columns, queries)
