@@ -20,7 +20,7 @@ class MST:
         else:
             parent[rx] = ry
             
-    def KruskalMST(self, start, end):
+    def kruskalMST(self, start, end):
         parent = [i for i in range(n + 1)]
         self.edges.sort(key = lambda x : -x[0])
 
